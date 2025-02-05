@@ -13,6 +13,18 @@ class DigitalPetAppState extends State<DigitalPetApp> {
   int hunger = 3;
   int happiness = 7;
 
+   void feedPet() {
+    setState(() {
+      hunger = hunger > 0 ? hunger - 1 : 0;
+    });
+  }
+
+  void playWithPet() {
+    setState(() {
+      happiness = happiness < 10 ? happiness + 1 : 10;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,6 +43,7 @@ class DigitalPetAppState extends State<DigitalPetApp> {
           body: TabBarView(
             children: [
               PetStatusTab(hunger: hunger, happiness: happiness),
+              PetActionsTab(feedPet: feedPet, playWithPet: playWithPet),
             ],
           ),
         ),
@@ -59,3 +72,28 @@ class PetStatusTab extends StatelessWidget {
   }
 }
 
+class PetActionsTab extends StatelessWidget {
+  final VoidCallback feedPet;
+  final VoidCallback playWithPet;
+
+  PetActionsTab({required this.feedPet, required this.playWithPet});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: feedPet,
+            child: Text('Feed Pet'),
+          ),
+          ElevatedButton(
+            onPressed: playWithPet,
+            child: Text('Play with Pet'),
+          ),
+        ],
+      ),
+    );
+  }
+}
