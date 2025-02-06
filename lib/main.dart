@@ -4,7 +4,27 @@ void main() {
   runApp(DigitalPetApp());
 }
 
-class DigitalPetApp extends StatelessWidget {
+class DigitalPetApp extends StatefulWidget {
+  @override
+  DigitalPetAppState createState() => DigitalPetAppState();
+}
+
+class DigitalPetAppState extends State<DigitalPetApp> {
+  int hunger = 3;
+  int happiness = 7;
+
+   void feedPet() {
+    setState(() {
+      hunger = hunger > 0 ? hunger - 1 : 0;
+    });
+  }
+
+  void playWithPet() {
+    setState(() {
+      happiness = happiness < 10 ? happiness + 1 : 10;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,9 +42,57 @@ class DigitalPetApp extends StatelessWidget {
           ),
           body: TabBarView(
             children: [
+              PetStatusTab(hunger: hunger, happiness: happiness),
+              PetActionsTab(feedPet: feedPet, playWithPet: playWithPet),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class PetStatusTab extends StatelessWidget {
+  final int hunger;
+  final int happiness;
+
+  PetStatusTab({required this.hunger, required this.happiness});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Hunger: $hunger', style: TextStyle(fontSize: 20)),
+          Text('Happiness: $happiness', style: TextStyle(fontSize: 20)),
+        ],
+      ),
+    );
+  }
+}
+
+class PetActionsTab extends StatelessWidget {
+  final VoidCallback feedPet;
+  final VoidCallback playWithPet;
+
+  PetActionsTab({required this.feedPet, required this.playWithPet});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            onPressed: feedPet,
+            child: Text('Feed Pet'),
+          ),
+          ElevatedButton(
+            onPressed: playWithPet,
+            child: Text('Play with Pet'),
+          ),
+        ],
       ),
     );
   }
