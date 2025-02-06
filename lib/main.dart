@@ -5,6 +5,8 @@ void main() {
 }
 
 class DigitalPetApp extends StatefulWidget {
+  const DigitalPetApp({super.key});
+
   @override
   DigitalPetAppState createState() => DigitalPetAppState();
 }
@@ -56,7 +58,7 @@ class PetStatusTab extends StatelessWidget {
   final int hunger;
   final int happiness;
 
-  PetStatusTab({required this.hunger, required this.happiness});
+  const PetStatusTab({super.key, required this.hunger, required this.happiness});
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +78,7 @@ class PetActionsTab extends StatelessWidget {
   final VoidCallback feedPet;
   final VoidCallback playWithPet;
 
-  PetActionsTab({required this.feedPet, required this.playWithPet});
+  const PetActionsTab({super.key, required this.feedPet, required this.playWithPet});
 
   @override
   Widget build(BuildContext context) {
